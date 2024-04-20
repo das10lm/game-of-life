@@ -4,6 +4,11 @@ This is implementation of [Conway's Game of Life](https://en.wikipedia.org/wiki/
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Deployments:
+
+1. **GitHub Pages:** https://das10lm.github.io/game-of-life
+2. **Netlify:** https://game-of-life-cra.netlify.app
+
 ## Available Scripts
 
 In the project directory, you can run:

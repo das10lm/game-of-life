@@ -7,6 +7,7 @@ function Game() {
   const [board, setBoard] = useState(makeEmptyBoard());
   const [delayDuration, setDelayDuration] = useState(500);
   const [isRunning, setIsRunning] = useState(false);
+  const [iterationCount, setIterationCount] = useState(0);
 
   function makeEmptyBoard() {
     let board = new Array(rowCount);
@@ -34,6 +35,7 @@ function Game() {
 
   function clearBoard() {
     setBoard(makeEmptyBoard());
+    setIterationCount(0);
   }
 
   function randomizeBoard() {
@@ -45,6 +47,7 @@ function Game() {
       }
     }
     setBoard(nextBoard);
+    setIterationCount(0);
   }
 
   const countNeighbors = useCallback(
@@ -86,6 +89,7 @@ function Game() {
       }
     }
     setBoard(nextBoard);
+    setIterationCount((iterationCount) => iterationCount + 1);
   }, [board, rowCount, colCount, countNeighbors]);
 
   useEffect(() => {
@@ -99,7 +103,7 @@ function Game() {
   }, [isRunning, delayDuration, runIteration]);
 
   return (
-    <div>
+    <>
       <div className="heading">Welcome to Game of Life</div>
       <div>
         <label>
@@ -131,41 +135,51 @@ function Game() {
             Clear Board
           </button>
         </div>
-
-        <div className="board">
-          <table>
-            <tbody>
-              {board.map((row, rowIdx) => {
-                return (
-                  <tr key={rowIdx}>
-                    {row.map((cell, colIdx) => (
-                      <td
-                        key={colIdx}
-                        onClick={() => handleCellClick(rowIdx, colIdx)}
-                        className={cell ? "alive" : "dead"}
-                      >
-                        <div className="cell"></div>
-                      </td>
-                    ))}
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
-        <div>
-          Reference:{" "}
-          <a
-            className="App-link"
-            target="_blank"
-            rel="noopener noreferrer"
-            href="https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life"
-          >
-            Conway's Game of Life - Wikipedia
-          </a>
-        </div>
+        <div>Iterations: {iterationCount}</div>
       </div>
-    </div>
+
+      <div className="board">
+        <table>
+          <tbody>
+            {board.map((row, rowIdx) => {
+              return (
+                <tr key={rowIdx}>
+                  {row.map((cell, colIdx) => (
+                    <td
+                      key={colIdx}
+                      onClick={() => handleCellClick(rowIdx, colIdx)}
+                      className={cell ? "alive" : "dead"}
+                    >
+                      <div className="cell"></div>
+                    </td>
+                  ))}
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+      <div>
+        Source Code:{" "}
+        <a
+          className="App-link"
+          target="_blank"
+          rel="noopener noreferrer"
+          href="https://github.com/das10lm/game-of-life"
+        >
+          GitHub
+        </a>
+        {" - "}Reference:{" "}
+        <a
+          className="App-link"
+          target="_blank"
+          rel="noopener noreferrer"
+          href="https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life"
+        >
+          Conway's Game of Life - Wikipedia
+        </a>
+      </div>
+    </>
   );
 }
 
